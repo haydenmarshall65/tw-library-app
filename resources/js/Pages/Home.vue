@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DefaultLayout from "../Components/Layouts/DefaultLayout.vue";
+import DefaultLayout from "../Layouts/DefaultLayout.vue";
 
 const fillFeaturedBooks = () => {}
 </script>

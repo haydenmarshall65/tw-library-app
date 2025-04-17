@@ -1,4 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
+import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -8,6 +9,7 @@ export default {
         "./resources/views/**/*.blade.php",
         "./resources/**/*{.vue,.js,.ts,.jsx,.tsx}",
     ],
+
     theme: {
         extend: {
             fontFamily: {
@@ -26,5 +28,6 @@ export default {
             }
         },
     },
-    plugins: [],
+
+    plugins: [forms],
 };
