@@ -14,8 +14,9 @@ class BookSeeder extends Seeder
      */
     public function run(): void
     {
-        $books = [
-            [
+        $books = [];
+        for($i = 0; $i < 20; $i++) {
+            $books[] = [
                 "title" => fake()->sentence(),
                 "author" => fake()->name(),
                 "description" => fake()->paragraph(),
@@ -26,44 +27,8 @@ class BookSeeder extends Seeder
                 "page_count" => fake()->randomNumber(3),
                 "created_at" => fake()->date(),
                 "updated_at" => fake()->date(),
-            ],
-            [
-                "title" => fake()->sentence(),
-                "author" => fake()->name(),
-                "description" => fake()->paragraph(),
-                "publisher" => fake()->name(),
-                "publication_date" => fake()->date(),
-                "category" => fake()->word(),
-                "isbn" => fake()->isbn10(),
-                "page_count" => fake()->randomNumber(3),
-                "created_at" => fake()->date(),
-                "updated_at" => fake()->date(),
-            ],
-            [
-                "title" => fake()->sentence(),
-                "author" => fake()->name(),
-                "description" => fake()->paragraph(),
-                "publisher" => fake()->name(),
-                "publication_date" => fake()->date(),
-                "category" => fake()->word(),
-                "isbn" => fake()->isbn10(),
-                "page_count" => fake()->randomNumber(3),
-                "created_at" => fake()->date(),
-                "updated_at" => fake()->date(),
-            ],
-            [
-                "title" => fake()->sentence(),
-                "author" => fake()->name(),
-                "description" => fake()->paragraph(),
-                "publisher" => fake()->name(),
-                "publication_date" => fake()->date(),
-                "category" => fake()->word(),
-                "isbn" => fake()->isbn10(),
-                "page_count" => fake()->randomNumber(3),
-                "created_at" => fake()->date(),
-                "updated_at" => fake()->date(),
-            ]
-        ];
+            ];
+        }
 
         DB::table("books")->insert($books);
     }
