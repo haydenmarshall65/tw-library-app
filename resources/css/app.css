@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.p-card {
+    --p-card-background: white;
+    --p-card-border-radius: 15px;
+    --p-card-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.p-button {
+    --p-button-primary-border-color: black;
+    --p-button-primary-background: white;
+    --p-button-primary-hover-background: #dddddd;
+    --p-button-primary-hover-border-color: black;
+}

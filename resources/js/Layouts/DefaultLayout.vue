@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Button } from 'primevue';
 import { ref } from 'vue';
 import { route } from '../../../vendor/tightenco/ziggy/src/js';
 import { router } from '@inertiajs/vue3';
@@ -22,13 +21,13 @@ const logout = () => {
                     <div class="flex flex-col">
                         <input id="search-books" class="border border-coffee bg-black/10 placeholder-black focus:bg-black/50 focus:placeholder-white focus:text-white text-black transition rounded-lg text-sm p-2" placeholder="Search for books..." v-model="searchInput">
                     </div>
-                    <Button aria-label="Search for books" icon="pi pi-search" class="text-coffee" iconPos="right"></Button>
+                    <button aria-label="Search for books" class="text-coffee"><i class="pi pi-search"></i></button>
                 </div>
             </form>
-            <Button @click="logout" aria-label="Sign Out" icon="pi pi-sign-out"></Button>
+            <button @click="logout" aria-label="Sign Out"><i class="pi pi-sign-out"></i></button>
         </div>
     </header>
-    <main class="bg-almond/75 min-h-[calc(100vh-87px)]">
+    <main class="bg-almond/75 min-h-[calc(100vh-90px)]">
         <div class="mx-20 border border-coffee/30 px-4 py-2">
             <slot></slot>
         </div>

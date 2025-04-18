@@ -14,9 +14,18 @@ type Book = {
     isbn: string
     page_count: number
     checked_out_by: []
+    filter_on: boolean
 }
+
+const isBook = (value: any): value is Book => {
+    return value.title !== undefined && value.author !== undefined && value.description !== undefined
+}
+
+type Filter = {name: string, on: boolean}
 
 export {
     getRandomNum,
-    type Book
+    isBook,
+    type Book,
+    type Filter,
 }
