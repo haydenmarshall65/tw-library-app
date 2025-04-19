@@ -45,6 +45,10 @@ const bookAuthorFiltersActive = computed(() => {
     return filtersActive;
 })
 
+const toggleFilter = (filter: Filter, type: string) => {
+    emits("toggleFilter", filter, type)
+}
+
 onMounted(() => {
         // set up the filters for the random 5 books
         if(!Array.isArray(props.featuredBooks)){
@@ -77,7 +81,13 @@ onMounted(() => {
             :aria-expanded="bookTitleFiltersOpen"
         >
             <div v-for="(titleFilter, index) in bookTitleFilters" class="flex items-center gap-2 p-2" :key="index">
-                <input type="checkbox" :id="'title-filter-'+index" v-model="titleFilter.on" :checked="titleFilter.on" @change="emits('toggleFilter')">
+                <input 
+                    type="checkbox" 
+                    :id="'title-filter-'+index" 
+                    v-model="titleFilter.on" 
+                    :checked="titleFilter.on" 
+                    @change="toggleFilter(titleFilter, 'title')"
+                >
                 <label :for="'title-filter-'+index">
                     {{titleFilter.name}}
                 </label>
@@ -97,7 +107,13 @@ onMounted(() => {
             :aria-expanded="bookCategoryFiltersOpen"
         >
             <div v-for="(categoryFilter, index) in bookCategoryFilters" class="flex items-center gap-2 p-2" :key="index">
-                <input type="checkbox" :id="'cat-filter-'+index" v-model="categoryFilter.on">
+                <input 
+                    type="checkbox" 
+                    :id="'cat-filter-'+index" 
+                    v-model="categoryFilter.on" 
+                    :checked="categoryFilter.on"
+                    @change="toggleFilter(categoryFilter, 'category')"
+                >
                 <label :for="'cat-filter-'+index">
                     {{categoryFilter.name}}
                 </label>
@@ -117,7 +133,13 @@ onMounted(() => {
             :aria-expanded="bookAuthorFiltersOpen"
         >
             <div v-for="(authorFilter, index) in bookAuthorFilters" class="flex items-center gap-2 p-2" :key="index">
-                <input type="checkbox" :id="'author-filter-'+index" v-model="authorFilter.on">
+                <input 
+                    type="checkbox" 
+                    :id="'author-filter-'+index" 
+                    v-model="authorFilter.on"
+                    :checked="authorFilter.on"
+                    @change="toggleFilter(authorFilter, 'author')"
+                >
                 <label :for="'author-filter-'+index">
                     {{authorFilter.name}}
                 </label>
