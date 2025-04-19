@@ -67,82 +67,84 @@ onMounted(() => {
 <template>
     <div class="flex flex-col justify-start items-start">
         <p class="bg-white w-full p-2 border-t border-x border-black"><i class="pi pi-filter"></i>Filters</p>
-        <button 
-            @click="bookTitleFiltersOpen = !bookTitleFiltersOpen" 
-            aria-controls="title-filters" 
-            class="bg-white border border-black w-full align-start font-bold"
-        >
-            Title <span v-if="bookTitleFiltersActive > 0">({{bookTitleFiltersActive}})</span>
-        </button>
-        <div 
-            class="bg-white border-b border-x border-black flex flex-col w-full divide-y divide-black"
-            v-show="bookTitleFiltersOpen" 
-            id="title-filters" 
-            :aria-expanded="bookTitleFiltersOpen"
-        >
-            <div v-for="(titleFilter, index) in bookTitleFilters" class="flex items-center gap-2 p-2" :key="index">
-                <input 
-                    type="checkbox" 
-                    :id="'title-filter-'+index" 
-                    v-model="titleFilter.on" 
-                    :checked="titleFilter.on" 
-                    @change="toggleFilter(titleFilter, 'title')"
-                >
-                <label :for="'title-filter-'+index">
-                    {{titleFilter.name}}
-                </label>
+        <div class="max-h-[65vh] overflow-y-auto w-full">
+            <button 
+                @click="bookTitleFiltersOpen = !bookTitleFiltersOpen" 
+                aria-controls="title-filters" 
+                class="bg-white border border-black w-full align-start font-bold"
+            >
+                Title <span v-if="bookTitleFiltersActive > 0">({{bookTitleFiltersActive}})</span>
+            </button>
+            <div 
+                class="bg-white border-b border-x border-black flex flex-col w-full divide-y divide-black"
+                v-show="bookTitleFiltersOpen" 
+                id="title-filters" 
+                :aria-expanded="bookTitleFiltersOpen"
+            >
+                <div v-for="(titleFilter, index) in bookTitleFilters" class="flex items-center gap-2 p-2" :key="index">
+                    <input 
+                        type="checkbox" 
+                        :id="'title-filter-'+index" 
+                        v-model="titleFilter.on" 
+                        :checked="titleFilter.on" 
+                        @change="toggleFilter(titleFilter, 'title')"
+                    >
+                    <label :for="'title-filter-'+index">
+                        {{titleFilter.name}}
+                    </label>
+                </div>
             </div>
-        </div>
-        <button 
-            @click="bookCategoryFiltersOpen = !bookCategoryFiltersOpen" 
-            aria-controls="category-filters" 
-            class="bg-white border border-black w-full align-start font-bold"
-        >
-            Category <span v-if="bookCategoryFiltersActive > 0">({{bookCategoryFiltersActive}})</span>
-        </button>
-        <div 
-            class="bg-white border-b border-x border-black flex flex-col w-full divide-y divide-black"
-            v-show="bookCategoryFiltersOpen" 
-            id="category-filters" 
-            :aria-expanded="bookCategoryFiltersOpen"
-        >
-            <div v-for="(categoryFilter, index) in bookCategoryFilters" class="flex items-center gap-2 p-2" :key="index">
-                <input 
-                    type="checkbox" 
-                    :id="'cat-filter-'+index" 
-                    v-model="categoryFilter.on" 
-                    :checked="categoryFilter.on"
-                    @change="toggleFilter(categoryFilter, 'category')"
-                >
-                <label :for="'cat-filter-'+index">
-                    {{categoryFilter.name}}
-                </label>
+            <button 
+                @click="bookCategoryFiltersOpen = !bookCategoryFiltersOpen" 
+                aria-controls="category-filters" 
+                class="bg-white border border-black w-full align-start font-bold"
+            >
+                Category <span v-if="bookCategoryFiltersActive > 0">({{bookCategoryFiltersActive}})</span>
+            </button>
+            <div 
+                class="bg-white border-b border-x border-black flex flex-col w-full divide-y divide-black"
+                v-show="bookCategoryFiltersOpen" 
+                id="category-filters" 
+                :aria-expanded="bookCategoryFiltersOpen"
+            >
+                <div v-for="(categoryFilter, index) in bookCategoryFilters" class="flex items-center gap-2 p-2" :key="index">
+                    <input 
+                        type="checkbox" 
+                        :id="'cat-filter-'+index" 
+                        v-model="categoryFilter.on" 
+                        :checked="categoryFilter.on"
+                        @change="toggleFilter(categoryFilter, 'category')"
+                    >
+                    <label :for="'cat-filter-'+index">
+                        {{categoryFilter.name}}
+                    </label>
+                </div>
             </div>
-        </div>
-        <button 
-            @click="bookAuthorFiltersOpen = !bookAuthorFiltersOpen" 
-            aria-controls="author-filters" 
-            class="bg-white border border-black w-full align-start font-bold"
-        >
-            Author
-        </button>
-        <div 
-            class="bg-white border-b border-x border-black flex flex-col w-full divide-y divide-black"
-            v-show="bookAuthorFiltersOpen" 
-            id="author-filters" 
-            :aria-expanded="bookAuthorFiltersOpen"
-        >
-            <div v-for="(authorFilter, index) in bookAuthorFilters" class="flex items-center gap-2 p-2" :key="index">
-                <input 
-                    type="checkbox" 
-                    :id="'author-filter-'+index" 
-                    v-model="authorFilter.on"
-                    :checked="authorFilter.on"
-                    @change="toggleFilter(authorFilter, 'author')"
-                >
-                <label :for="'author-filter-'+index">
-                    {{authorFilter.name}}
-                </label>
+            <button 
+                @click="bookAuthorFiltersOpen = !bookAuthorFiltersOpen" 
+                aria-controls="author-filters" 
+                class="bg-white border border-black w-full align-start font-bold"
+            >
+                Author
+            </button>
+            <div 
+                class="bg-white border-b border-x border-black flex flex-col w-full divide-y divide-black"
+                v-show="bookAuthorFiltersOpen" 
+                id="author-filters" 
+                :aria-expanded="bookAuthorFiltersOpen"
+            >
+                <div v-for="(authorFilter, index) in bookAuthorFilters" class="flex items-center gap-2 p-2" :key="index">
+                    <input 
+                        type="checkbox" 
+                        :id="'author-filter-'+index" 
+                        v-model="authorFilter.on"
+                        :checked="authorFilter.on"
+                        @change="toggleFilter(authorFilter, 'author')"
+                    >
+                    <label :for="'author-filter-'+index">
+                        {{authorFilter.name}}
+                    </label>
+                </div>
             </div>
         </div>
     </div>
