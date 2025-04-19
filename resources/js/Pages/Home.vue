@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import axios from "axios";
 import DefaultLayout from "../Layouts/DefaultLayout.vue";
-import { Card } from "primevue";
-import Checkbox from "primevue/checkbox";
+import BookTemplate from "../Components/BookTemplate.vue";
 import { ref, onMounted, type Ref, computed, ComputedRef } from "vue";
 import { Filter, getRandomNum, type Book } from "../utils";
 import { route } from "../../../vendor/tightenco/ziggy/src/js";
@@ -43,7 +42,6 @@ const toggleFilter = (filter: Filter, type: string) => {
         if(type === 'author') {
             return book.author === filter.name
         } else if (type === 'title') {
-            console.log(book.title === filter.name)
             return book.title === filter.name
         } else if (type === 'category') {
             return book.category === filter.name
@@ -56,11 +54,10 @@ const toggleFilter = (filter: Filter, type: string) => {
 
     // if the filter is active, apply filter. otherwise, do nothing.
     featuredBooks.value[filteredBookID].filter_on = filter.on;
-    console.log(featuredBooks.value[filteredBookID]);
 }
 
 onMounted(() => {
-    fillFeaturedBooks()
+    fillFeaturedBooks();
 })
 </script>
 
@@ -71,27 +68,11 @@ onMounted(() => {
             <div class="grid grid-cols-[20%_80%] gap-2">
                 <BookFilters :featuredBooks="featuredBooks" @toggleFilter="toggleFilter" />
                 <div class="flex flex-col items-start gap-4 h-[calc(100vh-140px)] overflow-y-auto">
-                    <Card 
+                    <BookTemplate
                         v-for="(book, index) in filteredFeaturedBooks" 
-                        :key="index" 
-                        class="p-4 border border-black w-full bg-white"
-                    >
-                        <template #title>
-                            <h2 class="text-lg font-semibold">{{book.title}}</h2>
-                        </template>
-                        <template #content>
-                            <div class="grid grid-cols-2">
-                                <div>
-                                    <p class="text-gray-600 text-sm">by {{book.author}}</p>
-                                    <p class="mt-4 w-1/2">{{book.description}}</p>
-                                    <p class="mt-4">5.0</p>
-                                </div>
-                                <div>
-                                    <img :src="book.cover_image ?? 'hi'" :alt="book.title + ' cover image'">
-                                </div>
-                            </div>
-                        </template>
-                    </Card>
+                        :key="index"
+                        :book="book"
+                    ></BookTemplate>
                 </div>
             </div>
         </div>

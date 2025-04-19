@@ -2,9 +2,9 @@
 import {type Ref, ref, computed, onMounted} from "vue"
 import { Book, isBook, type Filter } from "../utils";
 
-const props = defineProps({
-    featuredBooks: Array 
-})
+const props = defineProps<{
+    featuredBooks: Book[]
+}>()
 
 const emits = defineEmits(['toggleFilter'])
 

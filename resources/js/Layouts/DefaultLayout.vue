@@ -2,10 +2,17 @@
 import { ref } from 'vue';
 import { route } from '../../../vendor/tightenco/ziggy/src/js';
 import { router } from '@inertiajs/vue3';
+import {Link} from '@inertiajs/vue3';
 
-const searchInput = ref("");
+const searchTitle = ref("");
 
-const searchBooks = () => {}
+const searchBooks = () => {
+    if(searchTitle.value.length === 0) {
+        return;
+    }
+
+    router.visit(route('book.search', {searchTitle: searchTitle.value}))
+}
 
 const logout = () => {
     router.post(route('logout'))
@@ -14,14 +21,24 @@ const logout = () => {
 
 <template>
     <header id="topnavbar" class="border-b border-coffee p-4 flex justify-between items-center bg-tan">
-        <h1 class="text-2xl font-bold ml-4">Cohoes Public Library</h1>
+        <Link :href="route('home')">
+            <span class="text-2xl font-bold ml-4 flex items-center gap-2">
+                <i class="pi pi-book"></i>
+                <h1>Cohoes Public Library</h1>
+            </span>
+        </Link>
         <div class="flex gap-6">
             <form @submit.prevent="searchBooks">
                 <div class="flex gap-2 items-center border border-coffee p-2 rounded-xl">
                     <div class="flex flex-col">
-                        <input id="search-books" class="border border-coffee bg-black/10 placeholder-black focus:bg-black/50 focus:placeholder-white focus:text-white text-black transition rounded-lg text-sm p-2" placeholder="Search for books..." v-model="searchInput">
+                        <input 
+                            id="search-books" 
+                            class="border border-coffee bg-black/10 placeholder-black focus:bg-black/50 focus:placeholder-white focus:text-white text-black transition rounded-lg text-sm p-2" 
+                            placeholder="Search for books..." 
+                            v-model="searchTitle"
+                        >
                     </div>
-                    <button aria-label="Search for books" class="text-coffee"><i class="pi pi-search"></i></button>
+                    <button type="submit" aria-label="Search for books" class="text-coffee"><i class="pi pi-search"></i></button>
                 </div>
             </form>
             <button @click="logout" aria-label="Sign Out"><i class="pi pi-sign-out"></i></button>
