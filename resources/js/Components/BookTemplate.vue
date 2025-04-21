@@ -49,7 +49,7 @@ const checkoutBook = (result: {book: Book|null, errorMsg: string|null}) => {
                     <p class="text-gray-600 text-sm">by {{bookDetails.author}}</p>
                     <p class="mt-4 w-1/2">{{bookDetails.description}}</p>
                     <!-- <p class="mt-4">5.0</p> -->
-                    <BookRating :rating="0" :noReviewsYet="bookDetails.has_reviews" class="mt-2" />
+                    <Link :href="route('books.reviews', bookDetails.id)"><BookRating :rating="0" :noReviewsYet="bookDetails.has_reviews" class="mt-2" /></Link>
                 </div>
                 <div>
                     <img :src="bookDetails.cover_image ?? 'hi'" :alt="bookDetails.title + ' cover image'">

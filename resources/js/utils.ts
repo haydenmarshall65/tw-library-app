@@ -37,6 +37,16 @@ type CheckedOutBy = {
     book: Book | null
 }
 
+type CustomerReview = {
+    id: number
+    customer_id: number
+    customer: User | null
+    book_id: number
+    book: Book | null
+    review: string
+    rating: number
+}
+
 type Filter = {name: string, on: boolean}
 
 export {
@@ -46,4 +56,5 @@ export {
     type Filter,
     type User,
     type CheckedOutBy,
+    type CustomerReview,
 }

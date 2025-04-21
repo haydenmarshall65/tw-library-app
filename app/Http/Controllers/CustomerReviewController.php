@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CustomerReview;
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Http\Resources\BookResource;
 
 class CustomerReviewController extends Controller
 {
@@ -14,8 +15,8 @@ class CustomerReviewController extends Controller
     public function store(Book $book, Request $request)
     {
         $request->validate([
-            'review' => 'string',
-            'rating' => 'numeric'
+            'review' => 'required|string',
+            'rating' => 'required|numeric'
         ]);
 
         $review = CustomerReview::create([
@@ -26,5 +27,12 @@ class CustomerReviewController extends Controller
         ]);
 
         return response()->json(['review' => $review]);
+    }
+
+    public function show(Book $book, Request $request)
+    {
+        $bookReviews = CustomerReview::where('book_id', $book->id)->latest()->get();
+
+        return response()->json(['reviews' => $bookReviews]);
     }
 }

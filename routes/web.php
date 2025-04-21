@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookSearchController;
+use App\Http\Controllers\BookReviewController;
 
 Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/', function () {
@@ -20,6 +21,8 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/books/search', [BookSearchController::class, 'search'])->name('books.search');
 
     Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
+
+    Route::get('/books/{book}/reviews', [BookReviewController::class, 'show'])->name('books.reviews');
 });
 
 require __DIR__.'/auth.php';
