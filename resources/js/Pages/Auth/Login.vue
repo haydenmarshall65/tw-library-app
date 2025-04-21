@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import axios from 'axios';
 
 defineProps<{
     canResetPassword?: boolean;
@@ -18,12 +19,14 @@ const form = useForm({
     remember: false,
 });
 
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => {
-            form.reset('password');
-        },
-    });
+const submit = async () => {
+    await axios.get('/sanctum/csrf-cookie').then(() => {
+        form.post(route('login'), {
+        onFinish() {
+            form.reset('password')
+        }
+    })
+    })
 };
 </script>
 
