@@ -27,7 +27,9 @@ class BookResource extends JsonResource
             'isbn' => $this->isbn,
             'page_count' => $this->page_count,
             'checked_out_by' => $this->whenLoaded('checkedOutBy'),
-            'is_checked_out' => $this->checkedOutBy !== null,
+            'customer_reviews' => $this->whenLoaded('customerReviews'),
+            'has_reviews' => $this->whenLoaded('customerReviews', $this->customerReviews->count() === 0),
+            'is_checked_out' => $this->whenLoaded('customerReviews', $this->checkedOutBy !== null),
             'filter_on' => false,
         ];
     }

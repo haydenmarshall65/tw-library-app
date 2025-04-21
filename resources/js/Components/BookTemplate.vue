@@ -5,6 +5,7 @@ import { route } from '../../../vendor/tightenco/ziggy/src/js';
 import {Link} from '@inertiajs/vue3';
 import BookCheckoutButton from './BookCheckoutButton.vue';
 import { ref, type Ref } from "vue"
+import BookRating from './BookRating.vue';
 
 const props = defineProps<{
     book: Book
@@ -47,7 +48,8 @@ const checkoutBook = (result: {book: Book|null, errorMsg: string|null}) => {
                 <div>
                     <p class="text-gray-600 text-sm">by {{bookDetails.author}}</p>
                     <p class="mt-4 w-1/2">{{bookDetails.description}}</p>
-                    <p class="mt-4">5.0</p>
+                    <!-- <p class="mt-4">5.0</p> -->
+                    <BookRating :rating="0" :noReviewsYet="bookDetails.has_reviews" class="mt-2" />
                 </div>
                 <div>
                     <img :src="bookDetails.cover_image ?? 'hi'" :alt="bookDetails.title + ' cover image'">

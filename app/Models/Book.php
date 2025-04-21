@@ -14,4 +14,9 @@ class Book extends Model
     {
         return $this->hasOne(\App\Models\CheckedOutBy::class);
     }
+
+    public function customerReviews()
+    {
+        return $this->hasMany(\App\Models\CustomerReview::class);
+    }
 }

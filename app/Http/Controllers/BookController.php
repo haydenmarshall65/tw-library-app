@@ -14,7 +14,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        return response()->json(BookResource::collection(Book::with('checkedOutBy')->get()));
+        return response()->json(BookResource::collection(Book::with(['checkedOutBy', 'customerReviews'])->get()));
     }
 
     /**
