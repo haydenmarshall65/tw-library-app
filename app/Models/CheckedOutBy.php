@@ -8,6 +8,7 @@ class CheckedOutBy extends Model
 {
     protected $guarded = ['id'];
 
+    protected $database = 'main';
     protected $table = 'checked_out_by';
 
     public function book()

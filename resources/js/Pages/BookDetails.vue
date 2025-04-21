@@ -1,13 +1,28 @@
 <script setup lang="ts">
+import axios from "axios";
 import DefaultLayout from "../Layouts/DefaultLayout.vue"
 import { Book } from "../utils";
+import { route } from "../../../vendor/tightenco/ziggy/src/js";
+import { ref, type Ref } from "vue";
+import BookCheckoutButton from "../Components/BookCheckoutButton.vue";
 
 const props = defineProps<{
     book: {data: Book}
 }>()
 
-const checkoutBook = () => {
-    // axios request to checkoutbookcontroller::store, add book.id in query
+const bookDetails: Ref<Book> = ref(props.book.data);
+const successMessage: Ref<string> = ref("");
+const errorMessage: Ref<string> = ref("");
+
+const checkoutBook = (result: {book: Book|null, errorMsg: string|null}) => {
+    if(result.book !== null) {
+        successMessage.value = "\"" + bookDetails.value.title + "\" checked out!\nPlease return in 5 days.";
+        bookDetails.value = result.book;
+        setTimeout(() => successMessage.value = '', 5000);
+    } else if (typeof result.errorMsg === 'string' && result.errorMsg.length > 0) {
+        errorMessage.value = result.errorMsg;
+        setTimeout(() => errorMessage.value = '', 5000);
+    }
 }
 
 </script>
@@ -15,18 +30,24 @@ const checkoutBook = () => {
 <template>
     <DefaultLayout>
         <div>
-            <div class="flex justify-between">
-                <h2 class="font-bold text-3xl">{{ book.data.title }}</h2>
-                <button class="bg-coffee px-4 py-2 rounded-xl text-white text-lg font-bold">Checkout</button>
+            <div v-if="successMessage.length > 0" class="flex justify-center">
+                <p class="bg-green-100 text-green-800 shadow-lg p-6 my-2 w-fit text-center">{{ successMessage }}</p>
             </div>
-            <p class="text-lg">by {{book.data.author}}</p>
-            <p class="w-1/3 text-justify my-4 text-lg">{{ book.data.description }}</p>
-            <img :src="book.data.cover_image ?? 'hi'" :alt="book.data.title + ' cover image'">
+            <div v-else-if="errorMessage.length > 0" class="flex justify-center">
+                <p class="bg-red-100 text-red-800 shadow-lg p-6 my-2 w-fit text-center">{{ errorMessage }}</p>
+            </div>
+            <div class="flex justify-between">
+                <h2 class="font-bold text-3xl">{{ bookDetails.title }}</h2>
+                <BookCheckoutButton :book="bookDetails" @checkedOut="checkoutBook"/>
+            </div>
+            <p class="text-lg">by <span class="font-semibold">{{ bookDetails.author }}</span></p>
+            <p class="w-1/3 text-justify my-4 text-lg">{{ bookDetails.description }}</p>
+            <img :src="bookDetails.cover_image ?? 'hi'" :alt="bookDetails.title + ' cover image'">
             <hr class="border border-coffee my-2">
-            <p><b>Publisher: </b>{{ book.data.publisher }}</p>
-            <p><b>Publication Date: </b>{{ book.data.publication_date }}</p>
-            <p><b>ISBN: </b>{{ book.data.isbn }}</p>
-            <p><b>Page count: </b>{{ book.data.page_count }}</p>
+            <p><b>Publisher: </b>{{ bookDetails.publisher }}</p>
+            <p><b>Publication Date: </b>{{ bookDetails.publication_date }}</p>
+            <p><b>ISBN: </b>{{ bookDetails.isbn }}</p>
+            <p><b>Page count: </b>{{ bookDetails.page_count }}</p>
         </div>
     </DefaultLayout>
 </template>

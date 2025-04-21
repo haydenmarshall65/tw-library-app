@@ -7,5 +7,5 @@ use App\Http\Controllers\CheckOutBookController;
 
 Route::group(['middleware' => 'web', 'auth:sanctum'], function () {
     Route::get('/books', [BookController::class, 'index'])->name('books.index');
-    Route::get('/books/{book}/checkout', [CheckOutBookController::class, 'store'])->name('books.checkout');
+    Route::post('/books/{book}/checkout', [CheckOutBookController::class, 'store'])->name('books.checkout');
 });

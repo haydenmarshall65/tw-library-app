@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
+    protected $table = 'books';
+
     protected $guarded = ['id'];
 
     public function checkedOutBy()
     {
-        return $this->hasMany(\App\Models\CheckedOutBy::class);
+        return $this->hasOne(\App\Models\CheckedOutBy::class);
     }
 }

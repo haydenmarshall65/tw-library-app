@@ -14,6 +14,7 @@ type Book = {
     isbn: string
     page_count: number
     checked_out_by: []
+    is_checked_out: boolean
     filter_on: boolean
 }
 

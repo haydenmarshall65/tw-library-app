@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('checked_out_by', function (Blueprint $table) {
             $table->id();
             $table->integer('customer_id');
-            $table->foreign('customer_id')->references('id')->on('user');
+            $table->foreign('customer_id')->references('id')->on('users');
             $table->integer('book_id');
-            $table->foreign('book_id')->references('id')->on('book');
+            $table->foreign('book_id')->references('id')->on('books');
             $table->timestamps();
         });
     }
