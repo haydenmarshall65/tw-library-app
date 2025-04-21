@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('checked_out_bies', function (Blueprint $table) {
+        Schema::create('checked_out_by', function (Blueprint $table) {
             $table->id();
             $table->integer('customer_id');
             $table->foreign('customer_id')->references('id')->on('user');
             $table->integer('book_id');
             $table->foreign('book_id')->references('id')->on('book');
-            $table->text('review');
-            $table->integer('rating');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('checked_out_bies');
+        Schema::dropIfExists('checked_out_by');
     }
 };

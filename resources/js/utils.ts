@@ -21,6 +21,20 @@ const isBook = (value: any): value is Book => {
     return value.title !== undefined && value.author !== undefined && value.description !== undefined
 }
 
+type User = {
+    id: number
+    name: string
+    email: string
+}
+
+type CheckedOutBy = {
+    id: number
+    customer_id: number
+    customer: User | null
+    book_id: number
+    book: Book | null
+}
+
 type Filter = {name: string, on: boolean}
 
 export {
@@ -28,4 +42,6 @@ export {
     isBook,
     type Book,
     type Filter,
+    type User,
+    type CheckedOutBy,
 }

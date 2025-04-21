@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Card } from 'primevue';
 import { type Book } from '../utils';
+import { route } from '../../../vendor/tightenco/ziggy/src/js';
+import {Link} from '@inertiajs/vue3';
 
 const props = defineProps<{
     book: Book
@@ -13,7 +15,7 @@ const props = defineProps<{
         class="p-4 border border-black w-full bg-white"
     >
         <template #title>
-            <h2 class="text-lg font-semibold">{{book.title}}</h2>
+            <Link :href="route('books.show', book.id)"><h2 class="text-lg font-semibold">{{book.title}}</h2></Link>
         </template>
         <template #content>
             <div class="grid grid-cols-2">

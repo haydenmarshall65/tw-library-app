@@ -11,7 +11,7 @@ const searchBooks = () => {
         return;
     }
 
-    router.visit(route('book.search', {searchTitle: searchTitle.value}))
+    router.visit(route('books.search', {searchTitle: searchTitle.value}))
 }
 
 const logout = () => {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Resources\BookResource;
+use Inertia\Inertia;
 
 class BookController extends Controller
 {
@@ -37,7 +38,9 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        return Inertia::render('BookDetails', [
+            'book' => BookResource::make($book)
+        ]);
     }
 
     /**
