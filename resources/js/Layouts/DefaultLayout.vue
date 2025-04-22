@@ -4,6 +4,7 @@ import { route } from '../../../vendor/tightenco/ziggy/src/js';
 import { router, usePage } from '@inertiajs/vue3';
 import {Link} from '@inertiajs/vue3';
 import { User } from '../utils';
+import PrimaryButton from '../Components/PrimaryButton.vue';
 
 type PageProps = {
     props: {
@@ -41,13 +42,12 @@ const logout = () => {
             </span>
         </Link>
         <div class="flex items-center gap-6">
-            <button 
-                v-if="roles.includes('librarian')"
-                class="bg-coffee p-2 rounded-xl text-white"
+            <PrimaryButton 
                 @click="router.visit(route('books.manage'))"
+                v-if="roles.includes('librarian')"
             >
-                Manage books
-            </button>
+                Manage Books
+            </PrimaryButton>
             <form @submit.prevent="searchBooks">
                 <div class="flex gap-2 items-center border border-coffee p-2 rounded-xl">
                     <div class="flex flex-col">

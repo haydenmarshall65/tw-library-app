@@ -6,6 +6,7 @@ import BookRating from "../Components/BookRating.vue";
 import ReviewModal from "../Components/ReviewModal.vue";
 import axios from "axios";
 import { route } from "../../../vendor/tightenco/ziggy/src/js";
+import PrimaryButton from "../Components/PrimaryButton.vue";
 
 const props = defineProps<{
     book: {data: Book}
@@ -49,12 +50,12 @@ onMounted(() => {
                 <BookRating :rating="bookDetails.average_rating" />
                 <p class="text-lg">{{ allReviews.length }} Reviews</p>
             </div>
-            <button 
-                class="bg-coffee px-4 py-2 rounded-xl text-white text-lg font-bold mt-2"
+            <PrimaryButton 
+                class="text-lg font-bold mt-2"
                 @click="reviewModalIsOpen = !reviewModalIsOpen"
             >
                 Leave a Review
-            </button>
+            </PrimaryButton>
             <div 
                 v-if="allReviews.length > 0" 
                 class="flex flex-col justify-start gap-2"

@@ -5,6 +5,7 @@ import BookRating from "./BookRating.vue";
 import axios from "axios";
 import { route } from "../../../vendor/tightenco/ziggy/src/js";
 import { Book } from "../utils";
+import PrimaryButton from "../Components/PrimaryButton.vue"
 
 const props = defineProps<{book: Book}>()
 
@@ -82,14 +83,13 @@ watch(open, () => {
                 <input id="rating" class="rounded-lg" type="number" max="5" min="0" v-model="review.rating" @input="restrictBetween1and5">
             </div>
             <div class="flex flex-row items-center gap-2 mt-2">
-                <button
-                    class="px-4 py-2 rounded-xl text-white text-lg font-bold"
+                <PrimaryButton
                     :class="{'bg-coffee/75': submitting, 'bg-coffee': !submitting}"
                     type="submit"
                     :disabled="submitting"
                 >
                     {{submitting ? 'Submitting...' : 'Submit'}}
-                </button>
+                </PrimaryButton>
                 <p 
                     v-if="errorMessage.length > 0" 
                     class="text-lg bg-red-100 text-red-800 text-center w-fit px-4 py-2"

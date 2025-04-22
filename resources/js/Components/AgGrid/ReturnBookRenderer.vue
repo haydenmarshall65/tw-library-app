@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import PrimaryButton from '../PrimaryButton.vue';
 const props = defineProps({
     params: {
         default: () => {}
@@ -12,13 +13,12 @@ const checkedOutBy = ref(props.params.data.checked_out_by);
 
 <template>
     <div>
-        <button
+        <PrimaryButton
             v-if="checkedOutBy?.checked_out_at !== null && checkedOutBy?.returned_at === null"
             @click="returnBook(checkedOutBy.id)"
-            class="bg-coffee px-2 rounded-xl text-white"
         >
             <i class="pi pi-reply"></i>&nbsp;Return
-        </button>
+        </PrimaryButton>
     </div>
 </template>
 

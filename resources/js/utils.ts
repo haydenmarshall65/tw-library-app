@@ -13,7 +13,7 @@ type Book = {
     category: string
     isbn: string
     page_count: number
-    checked_out_by: []
+    checked_out_by: CheckedOutBy | null 
     is_checked_out: boolean
     filter_on: boolean
     has_reviews: boolean
@@ -50,6 +50,8 @@ type CustomerReview = {
 
 type Filter = {name: string, on: boolean}
 
+type BookForm = Book & {new_cover_image: File[]}
+
 export {
     getRandomNum,
     isBook,
@@ -58,4 +60,5 @@ export {
     type User,
     type CheckedOutBy,
     type CustomerReview,
+    type BookForm,
 }

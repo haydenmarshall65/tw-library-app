@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Http\Resources\BookResource;
 use Illuminate\Http\Request;
+use App\Http\Requests\ManageBooksRequest;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -16,9 +17,6 @@ class ManageBooksController extends Controller
      */
     public function index()
     {
-        if(! auth()->user()->hasRole('librarian')) {
-            return redirect()->to('/');
-        }
         $books = BookResource::collection(Book::with('checkedOutBy')->get());
 
         return Inertia::render('Librarian/ManageBooks', [
@@ -31,15 +29,39 @@ class ManageBooksController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Librarian/NewBook');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ManageBooksRequest $request)
     {
-        //
+        $newCoverImage = $request->new_cover_image;
+        $cover_image = null;
+        if($newCoverImage) {
+            $newCoverImageName = $newCoverImage->getClientOriginalName();
+
+            $request->file('new_cover_image')->storeAs('images', $newCoverImageName, 'public');
+
+            $cover_image = asset('/storage/images/'.$newCoverImageName);
+        }
+
+        $book = Book::create([
+            'title' => $request->title,
+            'author' => $request->author,
+            'description' => $request->description,
+            'publisher' => $request->publisher,
+            'publication_date' => Carbon::parse($request->publication_date)->format('m/d/Y'),
+            'category' => $request->category,
+            'isbn' => $request->isbn,
+            'page_count' => $request->page_count,
+            'cover_image' => $cover_image,
+        ]);
+
+        return response()->json([
+            'book' => BookResource::make($book)
+        ]);
     }
 
     /**
@@ -64,24 +86,17 @@ class ManageBooksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Book $book)
+    public function update(ManageBooksRequest $request, Book $book)
     {
-        $request->validate([
-            'title' => 'required|string',
-            'author' => 'required|string',
-            'description' => 'required|string',
-            'publisher' => 'required|string',
-            'publication_date' => 'required|string',
-            'category' => 'required|string',
-            'isbn' => 'required|numeric',
-            'page_count' => 'required|numeric',
-            'new_cover_image' => 'nullable|file|extensions:jpg,png'
-        ]);
-
         $newCoverImage = $request->new_cover_image;
-        $newCoverImageName = $newCoverImage->getClientOriginalName();
+        $cover_image = null;
+        if($newCoverImage) {
+            $newCoverImageName = $newCoverImage->getClientOriginalName();
 
-        $request->file('new_cover_image')->storeAs('images', $newCoverImageName, 'public');
+            $request->file('new_cover_image')->storeAs('images', $newCoverImageName, 'public');
+
+            $cover_image = asset('/storage/images/'.$newCoverImageName);
+        }
 
         $book->update([
             'title' => $request->title,
@@ -89,13 +104,14 @@ class ManageBooksController extends Controller
             'description' => $request->description,
             'publisher' => $request->publisher,
             'publication_date' => Carbon::parse($request->publication_date)->format('m/d/Y'),
+            'category' => $request->category,
             'isbn' => $request->isbn,
             'page_count' => $request->page_count,
-            'cover_image' => asset('/storage/images/'.$newCoverImageName),
+            'cover_image' => $cover_image,
         ]);
 
         return response()->json([
-            'book' => $book
+            'book' => BookResource::make($book)
         ]);
     }
 
@@ -104,6 +120,8 @@ class ManageBooksController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+
+        return response()->noContent();
     }
 }

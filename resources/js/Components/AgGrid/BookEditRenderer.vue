@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import PrimaryButton from '../PrimaryButton.vue';
 
 const props = defineProps({
     params: {
@@ -13,10 +14,9 @@ const editBook = ref(props.params.context.editBook);
 
 <template>
     <div>
-        <button 
-            class="bg-coffee px-2 rounded-xl text-white"
+        <PrimaryButton 
             @click="editBook(bookId)"
-        ><i class="pi pi-pencil"></i>&nbsp;Edit</button>
+        ><i class="pi pi-pencil"></i>&nbsp;Edit</PrimaryButton>
     </div>
 </template>
 

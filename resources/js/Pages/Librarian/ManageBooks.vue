@@ -5,7 +5,7 @@ import DefaultLayout from '../../Layouts/DefaultLayout.vue';
 import { Book, CheckedOutBy } from '../../utils';
 import BookEditRenderer from '../../Components/AgGrid/BookEditRenderer.vue';
 import { route } from '../../../../vendor/tightenco/ziggy/src/js';
-import { router } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import CheckedOutAtRenderer from '../../Components/AgGrid/CheckedOutAtRenderer.vue';
 import ReturnBookRenderer from '../../Components/AgGrid/ReturnBookRenderer.vue';
 import axios from 'axios';
@@ -84,6 +84,14 @@ onMounted(() => {
 <template>
     <DefaultLayout>
         <div>
+            <div class="flex justify-end mb-2">
+                <Link 
+                    :href="route('books.create')"
+                    class="bg-coffee px-4 py-2 text-white rounded-xl"
+                >
+                    <i class="pi pi-plus"></i>&nbsp;New Book
+                </Link>
+            </div>
             <ag-grid-vue 
                 :rowData="rowData"
                 :columnDefs="colDefs"
