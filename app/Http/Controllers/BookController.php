@@ -18,22 +18,6 @@ class BookController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // todo in step 7
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        // todo in step 7
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Book $book)
@@ -41,29 +25,5 @@ class BookController extends Controller
         return Inertia::render('BookDetails', [
             'book' => BookResource::make($book)
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Book $book)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Book $book)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Book $book)
-    {
-        //
     }
 }

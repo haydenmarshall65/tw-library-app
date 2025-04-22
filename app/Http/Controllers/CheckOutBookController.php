@@ -24,6 +24,7 @@ class CheckOutBookController extends Controller
         CheckedOutBy::create([
             'book_id' => $book->id,
             'customer_id' => auth()->user()->id,
+            'checked_out_at' => now()
         ]);
 
         $book->refresh();
@@ -31,5 +32,14 @@ class CheckOutBookController extends Controller
         return response()->json([
             'book' => BookResource::make($book)
         ]);
+    }
+
+    public function update(CheckedOutBy $checkedOutBy, Request $request)
+    {
+        $checkedOutBy->checked_out_at = null;
+        $checkedOutBy->returned_at = now();
+        $checkedOutBy->save();
+
+        return response()->json(['checkedOutBy' => $checkedOutBy]);
     }
 }

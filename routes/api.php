@@ -11,4 +11,5 @@ Route::group(['middleware' => 'web', 'auth:sanctum'], function () {
     Route::post('/books/{book}/checkout', [CheckOutBookController::class, 'store'])->name('books.checkout');
     Route::post('/books/{book}/review', [CustomerReviewController::class, 'store'])->name('books.new-review');
     Route::post('/books/{book}/reviews', [CustomerReviewController::class, 'show'])->name('books.all-reviews');
+    Route::put('checked_out/{checkedOutBy}/return', [CheckOutBookController::class, 'update'])->name('checked_out.return');
 });

@@ -7,6 +7,8 @@ import { Filter, getRandomNum, type Book } from "../utils";
 import { route } from "../../../vendor/tightenco/ziggy/src/js";
 import BookFilters from "../Components/BookFilters.vue";
 
+const props = defineProps();
+
 const books: Ref<Book[]> = ref([]);
 const featuredBooks: Ref<Book[]> = ref([]);
 const errorGettingBooks = ref("");

@@ -1,8 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { route } from '../../../vendor/tightenco/ziggy/src/js';
-import { router } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import {Link} from '@inertiajs/vue3';
+import { User } from '../utils';
+
+type PageProps = {
+    props: {
+        auth: {
+            user: User
+            roles: string[]
+        }
+    }
+}
+
+const page: PageProps = usePage();
+const roles = computed(() => page.props.auth.roles);
 
 const searchTitle = ref("");
 
@@ -27,7 +40,14 @@ const logout = () => {
                 <h1>Cohoes Public Library</h1>
             </span>
         </Link>
-        <div class="flex gap-6">
+        <div class="flex items-center gap-6">
+            <button 
+                v-if="roles.includes('librarian')"
+                class="bg-coffee p-2 rounded-xl text-white"
+                @click="router.visit(route('books.manage'))"
+            >
+                Manage books
+            </button>
             <form @submit.prevent="searchBooks">
                 <div class="flex gap-2 items-center border border-coffee p-2 rounded-xl">
                     <div class="flex flex-col">
