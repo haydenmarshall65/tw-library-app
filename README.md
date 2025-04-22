@@ -7,5 +7,7 @@ composer update
 npm install
 php artisan migrate
 php artisan db:seed --class=BookSeeder
+php artisan db:seed --class=RoleSeeder
+php artisan db:seed --class=LibrarianSeeder
 composer run dev
 ```
