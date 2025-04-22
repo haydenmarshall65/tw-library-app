@@ -46,7 +46,7 @@ onMounted(() => {
         <div :class="{'blur-[6px]': reviewModalIsOpen}">
             <h2 class="font-bold text-3xl">{{ bookDetails.title }} Reviews</h2>
             <div class="flex justify-start items-center gap-2 mt-2">
-                <BookRating :rating="4.2" />
+                <BookRating :rating="bookDetails.average_rating" />
                 <p class="text-lg">{{ allReviews.length }} Reviews</p>
             </div>
             <button 

@@ -17,6 +17,7 @@ type Book = {
     is_checked_out: boolean
     filter_on: boolean
     has_reviews: boolean
+    average_rating: number
 }
 
 const isBook = (value: any): value is Book => {

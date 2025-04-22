@@ -5,6 +5,8 @@ import { Book } from "../utils";
 import { route } from "../../../vendor/tightenco/ziggy/src/js";
 import { ref, type Ref } from "vue";
 import BookCheckoutButton from "../Components/BookCheckoutButton.vue";
+import BookRating from "../Components/BookRating.vue";
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps<{
     book: {data: Book}
@@ -48,6 +50,10 @@ const checkoutBook = (result: {book: Book|null, errorMsg: string|null}) => {
             <p><b>Publication Date: </b>{{ bookDetails.publication_date }}</p>
             <p><b>ISBN: </b>{{ bookDetails.isbn }}</p>
             <p><b>Page count: </b>{{ bookDetails.page_count }}</p>
+            <div class="flex items-start justify-start gap-2 mt-4">
+                <BookRating :rating="bookDetails.average_rating" />
+                <Link :href="route('books.reviews', bookDetails.id)"><span>Leave a rating</span></Link>
+            </div>
         </div>
     </DefaultLayout>
 </template>
