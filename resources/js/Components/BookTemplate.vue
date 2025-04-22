@@ -52,7 +52,7 @@ const checkoutBook = (result: {book: Book|null, errorMsg: string|null}) => {
                     <Link :href="route('books.reviews', bookDetails.id)"><BookRating :rating="bookDetails.average_rating" :noReviewsYet="bookDetails.has_reviews" class="mt-2" /></Link>
                 </div>
                 <div>
-                    <img :src="bookDetails.cover_image ?? 'hi'" :alt="bookDetails.title + ' cover image'">
+                    <img :src="bookDetails.cover_image ?? 'no_image_available.jpg'" :alt="bookDetails.title + ' cover image'" width="300">
                 </div>
             </div>
         </template>

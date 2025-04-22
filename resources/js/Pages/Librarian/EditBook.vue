@@ -3,8 +3,10 @@ import DefaultLayout from '../../Layouts/DefaultLayout.vue';
 import { Book } from '../../utils';
 import { ref, type Ref } from "vue";
 import { Card } from 'primevue';
-import { useForm } from '@inertiajs/vue3';
+import { router, useForm } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
+import { route } from '../../../../vendor/tightenco/ziggy/src/js';
+import axios from 'axios';
 
 const props = defineProps<{
     book: {data: Book}
@@ -22,7 +24,28 @@ const submitting: Ref<boolean> = ref(false);
 
 const submit = () => {
     submitting.value = true;
-    console.log('submitting...')
+
+    const formData = new FormData();
+
+    for(const [key, value] of Object.entries(editingBook.data())){
+        if(value === null) continue;
+
+        if(Array.isArray(value)) {
+            value.length > 0 && formData.append(key, value[0], value[0].name)
+        } else {
+            formData.append(key, String(value))
+        }
+    }
+
+    formData.append('_method', 'put');
+
+    axios.post(route('books.update', props.book.data.id), formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    .then((res) => {
+        console.log(res);
+    })
+    .catch((err) => {
+        console.log(err);
+    })
     // handle image upload to new api route for updating books
     submitting.value = false;
 }
@@ -85,9 +108,9 @@ const newCoverImage = (event: Event) => {
                         <input id="book-isbn" v-model="editingBook.isbn" class="rounded-lg w-[300px]">
 
                         <label for="book-category" class="text-sm mt-2">
-                            ISBN
+                            Category
                         </label>
-                        <input id="book-category" v-model="editingBook.isbn" class="rounded-lg w-[300px]">
+                        <input id="book-category" v-model="editingBook.category" class="rounded-lg w-[300px]">
 
                         <label for="book-page-count" class="text-sm mt-2">
                             Page Count
@@ -95,10 +118,11 @@ const newCoverImage = (event: Event) => {
                         <input type="number" id="book-page-count" v-model="editingBook.page_count" class="rounded-lg w-[300px]">
 
                         <label for="book-cover-image" class="text-sm mt-2">
-                            Page Count
+                            Cover Image
                         </label>
                         <input type="file" accept="image/*" id="book-cover-letter" @change="newCoverImage" class="rounded-lg w-[300px]">
                     </div>
+                    <button type="submit">Submit</button>
                 </template>
             </Card>
         </form>

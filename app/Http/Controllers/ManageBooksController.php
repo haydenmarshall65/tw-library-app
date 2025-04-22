@@ -6,6 +6,8 @@ use App\Models\Book;
 use App\Http\Resources\BookResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class ManageBooksController extends Controller
 {
@@ -64,7 +66,37 @@ class ManageBooksController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $request->validate([
+            'title' => 'required|string',
+            'author' => 'required|string',
+            'description' => 'required|string',
+            'publisher' => 'required|string',
+            'publication_date' => 'required|string',
+            'category' => 'required|string',
+            'isbn' => 'required|numeric',
+            'page_count' => 'required|numeric',
+            'new_cover_image' => 'nullable|file|extensions:jpg,png'
+        ]);
+
+        $newCoverImage = $request->new_cover_image;
+        $newCoverImageName = $newCoverImage->getClientOriginalName();
+
+        $request->file('new_cover_image')->storeAs('images', $newCoverImageName, 'public');
+
+        $book->update([
+            'title' => $request->title,
+            'author' => $request->author,
+            'description' => $request->description,
+            'publisher' => $request->publisher,
+            'publication_date' => Carbon::parse($request->publication_date)->format('m/d/Y'),
+            'isbn' => $request->isbn,
+            'page_count' => $request->page_count,
+            'cover_image' => asset('/storage/images/'.$newCoverImageName),
+        ]);
+
+        return response()->json([
+            'book' => $book
+        ]);
     }
 
     /**

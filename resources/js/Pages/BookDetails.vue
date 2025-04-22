@@ -44,7 +44,7 @@ const checkoutBook = (result: {book: Book|null, errorMsg: string|null}) => {
             </div>
             <p class="text-lg">by <span class="font-semibold">{{ bookDetails.author }}</span></p>
             <p class="w-1/3 text-justify my-4 text-lg">{{ bookDetails.description }}</p>
-            <img :src="bookDetails.cover_image ?? 'hi'" :alt="bookDetails.title + ' cover image'">
+            <img :src="bookDetails.cover_image ?? '/no_image_available.jpg'" :alt="bookDetails.title + ' cover image'" width="300">
             <hr class="border border-coffee my-2">
             <p><b>Publisher: </b>{{ bookDetails.publisher }}</p>
             <p><b>Publication Date: </b>{{ bookDetails.publication_date }}</p>
